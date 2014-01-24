@@ -1,0 +1,6 @@
+{
+    "name": "voxellib",    
+    "mcversion": "1.7.2",
+    "classTransformerClasses": "com.thevoxelbox.common.PlayerSpawnTransformer",
+    "description":"This is the description for VoxelCommon, it is designed to be quite long in order to test the wrapping and scrolling capabilities in LiteLoader's mod info panel.\n\nVoxelCommon contains all of the shared functionality for the VoxelModPack mods and is bundled with VoxelPacket in order to form the monolithic voxellib package."
+}
