@@ -1,7 +1,5 @@
 package com.thevoxelbox.voxelpacket.common.interfaces;
 
-import net.minecraft.network.Packet;
-
 /**
  * Delegate interface for functions which send packets
  * 
@@ -13,7 +11,8 @@ public interface IPacketSenderDelegate
 	/**
 	 * Delegate function, send the packet using this delegate
 	 * 
-	 * @param packet Packet to send
+	 * @param channel
+	 * @param payload
 	 */
-	public abstract void sendPacket(Packet packet);
+	public abstract void sendPayload(String channel, byte[] payload);
 }

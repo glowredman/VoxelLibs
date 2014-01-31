@@ -1,5 +1,7 @@
 package com.thevoxelbox.voxelpacket.common.interfaces;
 
+import net.minecraft.entity.player.EntityPlayerMP;
+
 /**
  * Interface for objects which can handle inbound packets
  * 
@@ -12,8 +14,9 @@ public interface IVoxelPacketHandler
 	 * and forming messages from the packet sequence.
 	 * 
 	 * @param packet
+	 * @param sender
 	 */
-	public abstract void handleVoxelPacket(com.thevoxelbox.voxelpacket.common.VoxelPacket packet);
+	public abstract void handleVoxelPacket(com.thevoxelbox.voxelpacket.common.VoxelPacket packet, EntityPlayerMP sender);
 	
 	/**
 	 * Register a new data encoder. The encoder's ID must be unique and consistent between the client and server

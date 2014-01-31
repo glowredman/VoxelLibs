@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.network.play.client.C17PacketCustomPayload;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.thevoxelbox.voxelpacket.common.data.VoxelPacketCharset;
 import com.thevoxelbox.voxelpacket.common.interfaces.IVoxelPacketHandler;
@@ -32,7 +32,7 @@ public class VoxelPacket
 	/**
 	 * Packet handler instance which handles inbound packets
 	 */
-	protected static IVoxelPacketHandler packetHandler;
+	protected static IVoxelPacketHandler clientPacketHandler, serverPacketHandler;
 	
 	/**
 	 * Next message ID
@@ -100,8 +100,6 @@ public class VoxelPacket
 					this.packetData = new byte[dataBuffer.remaining()];
 					dataBuffer.get(this.packetData);
 				}
-				
-				packetHandler.handleVoxelPacket(this);
 			}
 			catch (UnsupportedEncodingException ex)
 			{
@@ -111,7 +109,17 @@ public class VoxelPacket
 		}
 	}
 	
-	public static C17PacketCustomPayload createPayload(int dataType, Entity relevantEntity, String shortCode, byte[] payload) throws InvalidShortcodeException
+	public void handleServerPacket()
+	{
+		clientPacketHandler.handleVoxelPacket(this, null);
+	}
+	
+	public void handleClientPacket(EntityPlayerMP sender)
+	{
+		serverPacketHandler.handleVoxelPacket(this, sender);
+	}
+	
+	public static byte[] createPayload(int dataType, Entity relevantEntity, String shortCode, byte[] payload) throws InvalidShortcodeException
 	{
 		// Get next valid message id
 		int messageId = nextMessageId++;
@@ -151,7 +159,7 @@ public class VoxelPacket
 			
 			byte[] packetData = new byte[length];
 			dataBuffer.get(packetData);
-			return new C17PacketCustomPayload(VOXELPACKET_CHANNEL, packetData);
+			return packetData;
 		}
 	}		
     
@@ -159,8 +167,17 @@ public class VoxelPacket
 	 * Register the specified handler as the packet handler for this packet
 	 * @param handler
 	 */
-	public static void registerPacketHandler(IVoxelPacketHandler handler)
+	public static void registerClientPacketHandler(IVoxelPacketHandler handler)
 	{
-		packetHandler = handler;
+		clientPacketHandler = handler;
+	}
+	
+	/**
+	 * Register the specified handler as the packet handler for this packet
+	 * @param handler
+	 */
+	public static void registerServerPacketHandler(IVoxelPacketHandler handler)
+	{
+		serverPacketHandler = handler;
 	}
 }

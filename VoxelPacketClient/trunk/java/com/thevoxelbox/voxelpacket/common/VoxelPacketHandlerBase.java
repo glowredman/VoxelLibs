@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.network.play.client.C17PacketCustomPayload;
+import net.minecraft.entity.player.EntityPlayerMP;
 import sun.reflect.generics.reflectiveObjects.GenericArrayTypeImpl;
 
 import com.thevoxelbox.voxelpacket.common.encoders.VoxelPacketEncoderCoord3D;
@@ -142,8 +142,8 @@ public abstract class VoxelPacketHandlerBase implements IVoxelPacketHandler, IVo
 			int dataTypeId = encoder.getDataTypeID();
 			byte[] payload = encoder.encode(messageData);
 
-			C17PacketCustomPayload packet = VoxelPacket.createPayload(dataTypeId, relevantEntity, shortCode, payload);
-			packetSender.sendPacket(packet);
+			byte[] data = VoxelPacket.createPayload(dataTypeId, relevantEntity, shortCode, payload);
+			packetSender.sendPayload(VoxelPacket.VOXELPACKET_CHANNEL, data);
 		}
 		else
 		{
@@ -268,7 +268,7 @@ public abstract class VoxelPacketHandlerBase implements IVoxelPacketHandler, IVo
 	}
 
 	@Override
-	public final void handleVoxelPacket(VoxelPacket packet)
+	public final void handleVoxelPacket(VoxelPacket packet, EntityPlayerMP sender)
 	{
 		if (packet != null) // && packet.isVoxelPacket)
 		{
@@ -276,7 +276,7 @@ public abstract class VoxelPacketHandlerBase implements IVoxelPacketHandler, IVo
 			VoxelMessage dispatchMessage = null;
 			
 			// Box the packet message ID
-			Integer messageId = Integer.valueOf(packet.packetMessageId);
+			String messageId = sender != null ? sender.getUniqueID().toString() + "[" + packet.packetMessageId + "]" : String.valueOf(packet.packetMessageId);
 			
 			synchronized (this.messagesLock)
 			{
@@ -287,11 +287,7 @@ public abstract class VoxelPacketHandlerBase implements IVoxelPacketHandler, IVo
 					// Message with this ID wasn't found, should be a new message
 					if (msg == null)
 					{
-						msg = new VoxelMessage(this, packet);
-					}
-					else
-					{
-						throw new MessageOverflowException("Received message with an overlapping ID");
+						msg = new VoxelMessage(this, packet, sender);
 					}
 					
 					if (msg.isFinalised())

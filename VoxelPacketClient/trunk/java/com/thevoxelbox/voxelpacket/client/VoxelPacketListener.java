@@ -4,17 +4,22 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.IChatComponent;
 
+import com.mojang.authlib.GameProfile;
 import com.mumfrey.liteloader.ChatFilter;
 import com.mumfrey.liteloader.PluginChannelListener;
+import com.mumfrey.liteloader.ServerPlayerListener;
+import com.mumfrey.liteloader.ServerPluginChannelListener;
 import com.thevoxelbox.voxelpacket.common.VoxelPacket;
 import com.thevoxelbox.voxelpacket.common.interfaces.IChatHandler;
+import com.thevoxelbox.voxelpacket.server.VoxelPacketServer;
 
-public class VoxelPacketListener implements PluginChannelListener, ChatFilter
+public class VoxelPacketListener implements PluginChannelListener, ServerPluginChannelListener, ServerPlayerListener, ChatFilter
 {
 	private static IChatHandler chatHandler; 
 	
@@ -36,13 +41,14 @@ public class VoxelPacketListener implements PluginChannelListener, ChatFilter
 	@Override
 	public String getVersion()
 	{
-		return "2.1.2";
+		return "2.2.0";
 	}
 	
 	@Override
 	public void init(File configPath)
 	{
 		VoxelPacketClient.getInstance();
+		VoxelPacketServer.initInstance();
 	}
 	
 	@Override
@@ -61,8 +67,22 @@ public class VoxelPacketListener implements PluginChannelListener, ChatFilter
 	{
 		try
 		{
-			@SuppressWarnings("unused")
 			VoxelPacket packet = new VoxelPacket(channel, length, data);
+			packet.handleServerPacket();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onCustomPayload(EntityPlayerMP sender, String channel, int length, byte[] data)
+	{
+		try
+		{
+			VoxelPacket packet = new VoxelPacket(channel, length, data);
+			packet.handleClientPacket(sender);
 		}
 		catch (Exception ex)
 		{
@@ -84,5 +104,27 @@ public class VoxelPacketListener implements PluginChannelListener, ChatFilter
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void onPlayerConnect(EntityPlayerMP player, GameProfile profile)
+	{
+	}
+
+	@Override
+	public void onPlayerLoggedIn(EntityPlayerMP player)
+	{
+		VoxelPacketServer.getInstance().queryPlayer(player, "SUBS");
+	}
+
+	@Override
+	public void onPlayerRespawn(EntityPlayerMP player, EntityPlayerMP oldPlayer, int newDimension, boolean playerWonTheGame)
+	{
+	}
+
+	@Override
+	public void onPlayerLogout(EntityPlayerMP player)
+	{
+		VoxelPacketServer.getInstance().onPlayerQuit(player);
 	}
 }

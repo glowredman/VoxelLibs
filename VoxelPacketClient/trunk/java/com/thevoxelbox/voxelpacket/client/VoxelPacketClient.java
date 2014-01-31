@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C17PacketCustomPayload;
 
 import com.thevoxelbox.voxelpacket.common.VoxelMessage;
 import com.thevoxelbox.voxelpacket.common.VoxelPacket;
@@ -60,7 +61,7 @@ public class VoxelPacketClient extends VoxelPacketHandlerBase implements IVoxelM
 		
 		this.subscribe(this, "@QUERY");
 		
-        VoxelPacket.registerPacketHandler(this);
+        VoxelPacket.registerClientPacketHandler(this);
 
 		this.minecraft = Minecraft.getMinecraft();
 		this.chatManager = new ChatManager(this.minecraft);
@@ -68,11 +69,10 @@ public class VoxelPacketClient extends VoxelPacketHandlerBase implements IVoxelM
 		// Using a delegate allows us to keep SendPacket private
 		this.senderDelegate = new IPacketSenderDelegate()
 		{
-			@SuppressWarnings("synthetic-access")
 			@Override
-			public void sendPacket(Packet packet)
+			public void sendPayload(String channel, byte[] payload)
 			{
-				VoxelPacketClient.this.onSendPacket(packet);
+				VoxelPacketClient.this.onSendPacket(new C17PacketCustomPayload(channel, payload));
 			}
 		};
 	}
@@ -271,7 +271,7 @@ public class VoxelPacketClient extends VoxelPacketHandlerBase implements IVoxelM
 	 * 
 	 * @param packet Packet to send
 	 */
-	private void onSendPacket(Packet packet)
+	protected void onSendPacket(Packet packet)
 	{
 		if (this.minecraft != null && this.minecraft.getNetHandler() != null)
 		{
