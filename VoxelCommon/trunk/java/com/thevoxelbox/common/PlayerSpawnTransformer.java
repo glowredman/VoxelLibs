@@ -1,6 +1,7 @@
 package com.thevoxelbox.common;
 
-import com.mumfrey.liteloader.core.transformers.PacketTransformer;
+import com.mumfrey.liteloader.transformers.PacketTransformer;
+
 
 public class PlayerSpawnTransformer extends PacketTransformer
 {
