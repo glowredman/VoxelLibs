@@ -1,9 +1,11 @@
 package com.thevoxelbox.common.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 
 import com.thevoxelbox.common.interfaces.IListObject;
@@ -15,16 +17,22 @@ import com.thevoxelbox.common.interfaces.IListObject;
  */
 public class ItemStackInfo implements IListObject
 {
-	protected IIcon icon;
+	private int index;
+	
+	private IIcon icon;
 	
 	/**
 	 * Item name
 	 */
-	protected String name, nameWithID;
+	private String name, nameWithID;
 	
-	protected int damageValue;
+	private Item item;
 	
-	protected ItemStack stack;
+	private String itemId;
+	
+	private int damageValue;
+	
+	private ItemStack stack;
 	
 	/**
 	 * Create a new item info
@@ -33,8 +41,9 @@ public class ItemStackInfo implements IListObject
 	 * @param texture Item texture
 	 * @param icon Item's icon index
 	 */
-	public ItemStackInfo(IIcon icon, int damage, ItemStack stack)
+	public ItemStackInfo(int index, IIcon icon, int damage, ItemStack stack)
 	{
+		this.index = index;
 		this.name = stack.getDisplayName();
 		this.icon = icon;
 		this.damageValue = damage;
@@ -47,7 +56,9 @@ public class ItemStackInfo implements IListObject
 	public void updateName()
 	{
 		this.name = this.stack.getDisplayName();
-		this.nameWithID = this.name + " " + Item.getIdFromItem(this.stack.getItem());
+		this.item = this.stack.getItem();
+		this.itemId = ItemStackInfo.getItemIdentifier(this.item);
+		this.nameWithID = this.name + " " + EnumChatFormatting.LIGHT_PURPLE + this.itemId;
 		
 		if (this.damageValue > 0)
 			this.nameWithID += ":" + this.damageValue;
@@ -77,7 +88,17 @@ public class ItemStackInfo implements IListObject
 	{
 		return this.damageValue;
 	}
-
+	
+	public Item getItem()
+	{
+		return this.item;
+	}
+	
+	public String getItemId()
+	{
+		return this.itemId;
+	}
+	
 	public ItemStack getItemStack()
 	{
 		return this.stack;
@@ -120,7 +141,7 @@ public class ItemStackInfo implements IListObject
 	@Override
 	public int getID()
 	{
-		return Item.getIdFromItem(this.stack.getItem());
+		return this.index;
 	}
 
 	/**
@@ -282,5 +303,25 @@ public class ItemStackInfo implements IListObject
 	@Override
 	public void setDisplayName(String newDisplayName)
 	{
+	}
+
+	public static String getItemIdentifier(Item item)
+	{
+		 String itemName = Item.itemRegistry.getNameForObject(item);
+		 return itemName == null ? "air" : stripNamespace(itemName); 
+	 }
+	 
+	public static String getBlockIdentifier(Block block)
+	{
+		 String blockName = Block.blockRegistry.getNameForObject(block);
+		 return blockName == null ? "air" : stripNamespace(blockName); 
+	}
+	/**
+	 * @param itemName
+	 * @return
+	 */
+	private static String stripNamespace(String itemName)
+	{
+		return itemName.startsWith("minecraft:") ? itemName.substring(10) : itemName;
 	}
 }

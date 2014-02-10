@@ -15,7 +15,6 @@ import org.lwjgl.input.Keyboard;
 
 import com.mumfrey.liteloader.Tickable;
 import com.mumfrey.liteloader.core.LiteLoader;
-import com.mumfrey.liteloader.util.ModUtilities;
 
 /**
  * Manager object that keeps track of the settings panels and manages the tab
@@ -75,7 +74,7 @@ public class SettingsPanelManager implements Tickable
 		{
 			instance = new SettingsPanelManager();
 			LiteLoader.getEvents().addTickListener(instance);
-			ModUtilities.registerKey(guiKeyBinding);
+			LiteLoader.getInput().registerKeyBinding(guiKeyBinding);
 		}
 		
 		return instance;

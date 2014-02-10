@@ -2,7 +2,6 @@ package com.thevoxelbox.common.util.gui;
 
 import static org.lwjgl.opengl.GL11.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 
 import com.thevoxelbox.common.LiteModVoxelCommon;
@@ -42,7 +41,7 @@ public class GuiCheckBox extends GuiControl
 	{
 		super(id, xPosition, yPosition, displayText);
 		
-		this.setWidth(AbstractionLayer.getFontRenderer().getStringWidth(displayText) + 20);
+		this.setWidth(Minecraft.getMinecraft().fontRenderer.getStringWidth(displayText) + 20);
 		this.checked = checked;
 	}
 	
@@ -59,7 +58,7 @@ public class GuiCheckBox extends GuiControl
 	{
 		super(id, xPosition, yPosition, displayText);
 		
-		this.setWidth(AbstractionLayer.getFontRenderer().getStringWidth(displayText) + 20);
+		this.setWidth(Minecraft.getMinecraft().fontRenderer.getStringWidth(displayText) + 20);
 		this.checked = checked;
 		this.Style = style;
 	}
@@ -120,8 +119,6 @@ public class GuiCheckBox extends GuiControl
 		// Control not visible
 		if(!this.isVisible()) return;
 		
-		FontRenderer fontrenderer = AbstractionLayer.getFontRenderer();
-		
 		boolean mouseOver = mouseX >= this.field_146128_h && mouseY >= this.field_146129_i && mouseX < this.field_146128_h + this.field_146120_f && mouseY < this.field_146129_i + this.field_146121_g;
 		
 		if (this.Style == DisplayStyle.Button)
@@ -138,13 +135,13 @@ public class GuiCheckBox extends GuiControl
 			
 			this.drawTexturedModalRect(this.field_146128_h, y, this.field_146128_h + 12, y + 12, u, 52, u + 12, 64);
 			this.mouseDragged(minecraft, mouseX, mouseY);
-			this.drawString(fontrenderer, this.displayString, this.field_146128_h + 16, this.field_146129_i + (this.field_146121_g - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : 0xe0e0e0) : 0xffa0a0a0);
+			this.drawString(minecraft.fontRenderer, this.displayString, this.field_146128_h + 16, this.field_146129_i + (this.field_146121_g - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : 0xe0e0e0) : 0xffa0a0a0);
 		}
 		else
 		{
 			Gui.drawRect(this.field_146128_h, this.field_146129_i, this.field_146128_h + this.field_146120_f, this.field_146129_i + this.field_146121_g, this.checked ? 0xFFFFFF00 : 0xFF808080);
 			Gui.drawRect(this.field_146128_h + 1, this.field_146129_i + 1, this.field_146128_h + this.field_146120_f - 1, this.field_146129_i + this.field_146121_g - 1, mouseOver ? 0xFF333333 : 0xFF000000);
-			this.drawCenteredString(fontrenderer, this.displayString, this.field_146128_h + (this.field_146120_f / 2), this.field_146129_i + (this.field_146121_g - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : (this.checked ? 0xFFFFFF00 : 0xe0e0e0)) : 0xffa0a0a0);
+			this.drawCenteredString(minecraft.fontRenderer, this.displayString, this.field_146128_h + (this.field_146120_f / 2), this.field_146129_i + (this.field_146121_g - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : (this.checked ? 0xFFFFFF00 : 0xe0e0e0)) : 0xffa0a0a0);
 		}
 	}
 

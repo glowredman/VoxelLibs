@@ -2,7 +2,6 @@ package com.thevoxelbox.common;
 
 import com.mumfrey.liteloader.transformers.PacketTransformer;
 
-
 public class PlayerSpawnTransformer extends PacketTransformer
 {
 	private static final String LiteModVoxelCommon = "com.thevoxelbox.common.LiteModVoxelCommon";
