@@ -122,7 +122,7 @@ public class LiteModVoxelCommon implements LiteMod
 	 * @param mc
 	 * @param packet
 	 */
-	@SuppressWarnings({ "cast", "unchecked" })
+	@SuppressWarnings({ "cast", "unchecked", "deprecation" })
 	public static void processSpawnPlayer(INetHandler netHandler, S0CPacketSpawnPlayer packet)
 	{
 		Minecraft mc = Minecraft.getMinecraft();

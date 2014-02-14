@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GLContext;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.Tessellator;
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
-import static org.lwjgl.opengl.ARBFramebufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.*;
 
@@ -20,8 +19,6 @@ import static org.lwjgl.opengl.GL14.*;
 public class FBO
 {
 	private static boolean supported = false;
-	
-	private static boolean useARB = false;
 	
 	/**
 	 * This FBO is created
@@ -66,7 +63,6 @@ public class FBO
 		if (capabilities.GL_ARB_framebuffer_object)
 		{
 			supported = true;
-			useARB = true;
 			return true;
 		}
 		else if (capabilities.GL_EXT_framebuffer_object)
@@ -129,36 +125,18 @@ public class FBO
 			BufferedImage textureImage = new BufferedImage(this.frameBufferWidth, this.frameBufferHeight, BufferedImage.TYPE_INT_RGB);
 			this.texture = new DynamicTexture(textureImage);
 			
-			if (useARB)
-			{
-				this.frameBuffer = glGenFramebuffers();
-				this.depthBuffer = glGenRenderbuffers();
-				
-				glBindFramebuffer(GL_FRAMEBUFFER, this.frameBuffer);
-				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this.texture.getGlTextureId(), 0);
+			this.frameBuffer = glGenFramebuffersEXT();
+			this.depthBuffer = glGenRenderbuffersEXT();
 			
-				glBindRenderbuffer(GL_RENDERBUFFER, this.depthBuffer);
-				glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, this.frameBufferWidth, this.frameBufferHeight);
-				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this.depthBuffer);
-				
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-				glBindRenderbuffer(GL_RENDERBUFFER, 0);
-			}
-			else
-			{
-				this.frameBuffer = glGenFramebuffersEXT();
-				this.depthBuffer = glGenRenderbuffersEXT();
-				
-				glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBuffer);
-				glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, this.texture.getGlTextureId(), 0);
-			
-				glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, this.depthBuffer);
-				glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, this.frameBufferWidth, this.frameBufferHeight);
-				glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, this.depthBuffer);
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBuffer);
+			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, this.texture.getGlTextureId(), 0);
+		
+			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, this.depthBuffer);
+			glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, this.frameBufferWidth, this.frameBufferHeight);
+			glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, this.depthBuffer);
 
-				glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-				glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
-			}
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
 		}
 
 		this.bind();
@@ -176,16 +154,8 @@ public class FBO
 		
 		if (this.created && this.checkFBO())
 		{
-			if (useARB)
-			{
-				glBindFramebuffer(GL_FRAMEBUFFER, this.frameBuffer);
-				glBindRenderbuffer(GL_RENDERBUFFER, this.depthBuffer);
-			}
-			else
-			{
-				glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBuffer);
-				glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, this.depthBuffer);
-			}
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBuffer);
+			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, this.depthBuffer);
 			
 			glPushAttrib(GL_VIEWPORT_BIT);
 			glViewport(0, 0, this.frameBufferWidth, this.frameBufferHeight);
@@ -202,17 +172,8 @@ public class FBO
 	{
 		if (supported && this.active)
 		{
-			if (useARB)
-			{
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-				glBindRenderbuffer(GL_RENDERBUFFER, 0);
-			}
-			else
-			{
-				glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-				glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
-			}
-
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
 			glPopAttrib();
 			this.active = false;
 		}
@@ -227,18 +188,13 @@ public class FBO
 		
 		this.end();
 		
-		glDeleteTextures(this.texture.getGlTextureId());
+		if (this.texture != null)
+		{
+			glDeleteTextures(this.texture.getGlTextureId());
+		}
 
-		if (useARB)
-		{
-			glDeleteRenderbuffers(this.depthBuffer);
-			glDeleteFramebuffers(this.frameBuffer);
-		}
-		else
-		{
-			glDeleteRenderbuffersEXT(this.depthBuffer);
-			glDeleteFramebuffersEXT(this.frameBuffer);
-		}
+		glDeleteRenderbuffersEXT(this.depthBuffer);
+		glDeleteFramebuffersEXT(this.frameBuffer);
 		
 		this.depthBuffer = 0;
 		this.texture = null;
@@ -254,18 +210,10 @@ public class FBO
 	 */
 	private boolean checkFBO()
 	{
-		if (useARB)
-		{
-			glBindFramebuffer(GL_FRAMEBUFFER, this.frameBuffer);
-			glBindRenderbuffer(GL_RENDERBUFFER, this.depthBuffer);
-		}
-		else
-		{
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBuffer);
-			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, this.depthBuffer);
-		}
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, this.frameBuffer);
+		glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, this.depthBuffer);
 
-		int frameBufferStatus = useARB ? glCheckFramebufferStatus(GL_FRAMEBUFFER) : glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+		int frameBufferStatus = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 
 		// status 
 		switch (frameBufferStatus)
