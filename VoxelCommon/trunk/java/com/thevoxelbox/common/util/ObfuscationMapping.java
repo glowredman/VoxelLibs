@@ -65,7 +65,7 @@ public enum ObfuscationMapping
         modelArmorChestplate("modelArmorChestplate",      "g",  "field_77108_b"),  // RenderPlayer/modelArmorChestplate
                   modelArmor("modelArmor",                "h",  "field_77111_i"),  // RenderPlayer/modelArmor
                 spawnerLogic( null,                       "a",  "field_145882_a"), // TileEntityMobSpawner/field_145882_a
-          specialRendererMap( null,                       "m",  "field_147559_m"), // TileEntityRendererDispatcher/specialRendererMap
+          specialRendererMap("mapSpecialRenderers",       "m",  "field_147559_m"), // TileEntityRendererDispatcher/mapSpecialRenderers
            soundSystemThread( null,                       "e",  "field_148620_e"), // SoundManager/sndSystem
                  lastClicked( null,                       "q",  "field_148167_s"), // GuiSlot/lastClicked
 
@@ -76,7 +76,7 @@ public enum ObfuscationMapping
   
         resourceToTextureMap("mapTextureObjects",         "b",  "field_110585_a"), // TextureManager/mapTextureObjects
         
-    tileEntityNameToClassMap( null,                       "i",  "field_145855_i"), // TileEntity/nameToClassMap
+    tileEntityNameToClassMap("nameToClassMap",            "i",  "field_145855_i"), // TileEntity/nameToClassMap
                 realmsButton("field_96139_s",             "x",  "field_96139_s"),  // GuiMainMenu/field_96139_s
            optionsBackground("optionsBackground",         "b",  "field_110325_k"), // Gui/optionsBackground
              panoramaTexture( null,                       "L",  "field_110351_G"), // GuiMainMenu/field_110351_G
@@ -86,9 +86,19 @@ public enum ObfuscationMapping
                     lastPosY("lastPosY",                  "q",  "field_147381_q"), // NetServerHandler/lastPosZ
                     hasMoved("hasMoved",                  "r",  "field_147380_r"), // NetServerHandler/hasMoved
 
-             rainingStrength("rainingStrength",           "n", "field_73004_o"),   // World/rainingStrength
-          thunderingStrength("thunderingStrength",        "p", "field_73017_q"),   // World/thunderingStrength
+             rainingStrength("rainingStrength",           "n",  "field_73004_o"),   // World/rainingStrength
+          thunderingStrength("thunderingStrength",        "p",  "field_73017_q"),   // World/thunderingStrength
+          
+               standing_sign("standing_sign",             "an", "field_150472_an"), // Blocks/standing_sign
+                   wall_sign("wall_sign",                 "as", "field_150444_as"), // Blocks/wall_sign
 
+          internetServerList( null,                       "i",  "field_146804_i"),  // GuiMultiplayer/internetServerList
+         serverSelectionList( null,                       "h",  "field_146803_h"),  // GuiMultiplayer/selectedServer
+guiResourcePacksParentScreen( null,                       "f",  "field_146965_f"),  // GuiScreenResourcePacks/parentScreen
+    abstractResourcePackFile("resourcePackFile",          "a",  "field_110597_b"),  // AbstractResourcePack/resourcePackFile
+               mcFramebuffer("mcFramebuffer",             "at", "field_147124_at"), // Minecraft/mcFramebuffer
+                 eventSounds( null,                       "a",  "field_148736_a"),  // SoundEventAccessorComposite/field_148736_a
+                   
        SlotCreativeInventory( null,                     "bdt", "net.minecraft.client.gui.inventory.GuiContainerCreative$CreativeSlot"),
            ContainerCreative( null,                     "bds", "net.minecraft.client.gui.inventory.GuiContainerCreative$ContainerCreative"),
     CallableMinecraftVersion( null,                       "e", "net.minecraft.crash.CrashReport$1");
