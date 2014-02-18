@@ -5,5 +5,5 @@
     "revision": "${build.number}",
     "author": "${author}",
     "description": "VoxelLib contains all of the shared functionality for the VoxelModPack mods",
-    "classTransformerClasses": "com.thevoxelbox.common.PlayerSpawnTransformer"
+    "classTransformerClasses": "com.thevoxelbox.common.PlayerSpawnTransformer,com.thevoxelbox.common.TimeUpdateTransformer"
 }

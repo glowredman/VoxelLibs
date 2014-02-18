@@ -91,6 +91,7 @@ public enum ObfuscationMapping
           
                standing_sign("standing_sign",             "an", "field_150472_an"), // Blocks/standing_sign
                    wall_sign("wall_sign",                 "as", "field_150444_as"), // Blocks/wall_sign
+                 mob_spawner("mob_spawner",               "ac", "field_150474_ac"), // Blocks/mob_spawner
 
           internetServerList( null,                       "i",  "field_146804_i"),  // GuiMultiplayer/internetServerList
          serverSelectionList( null,                       "h",  "field_146803_h"),  // GuiMultiplayer/selectedServer
@@ -98,6 +99,7 @@ guiResourcePacksParentScreen( null,                       "f",  "field_146965_f"
     abstractResourcePackFile("resourcePackFile",          "a",  "field_110597_b"),  // AbstractResourcePack/resourcePackFile
                mcFramebuffer("mcFramebuffer",             "at", "field_147124_at"), // Minecraft/mcFramebuffer
                  eventSounds( null,                       "a",  "field_148736_a"),  // SoundEventAccessorComposite/field_148736_a
+                   worldInfo("worldInfo",                 "x",  "field_72986_A"),   // World/worldInfo
                    
        SlotCreativeInventory( null,                     "bdt", "net.minecraft.client.gui.inventory.GuiContainerCreative$CreativeSlot"),
            ContainerCreative( null,                     "bds", "net.minecraft.client.gui.inventory.GuiContainerCreative$ContainerCreative"),

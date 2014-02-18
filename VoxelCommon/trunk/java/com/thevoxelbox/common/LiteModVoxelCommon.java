@@ -10,6 +10,8 @@ import net.minecraft.entity.DataWatcher;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetHandler;
+import net.minecraft.network.play.INetHandlerPlayClient;
+import net.minecraft.network.play.server.S03PacketTimeUpdate;
 import net.minecraft.network.play.server.S0CPacketSpawnPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -19,6 +21,7 @@ import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.core.LiteLoader;
 import com.thevoxelbox.common.entity.EntityOtherPlayerMPHookable;
 import com.thevoxelbox.common.interfaces.IEntityOtherPlayerMPSpawnListener;
+import com.thevoxelbox.common.interfaces.ITimeHandler;
 
 /**
  * Main mod class for VoxelCommon
@@ -30,7 +33,7 @@ public class LiteModVoxelCommon implements LiteMod
 	/**
 	 * 
 	 */
-	public static final String VERSION = "2.2.3";
+	public static final String VERSION = "2.2.4";
 
 	public static final ResourceLocation GUIPARTS = new ResourceLocation("voxelcommon", "textures/gui/guiparts.png");
 
@@ -39,6 +42,8 @@ public class LiteModVoxelCommon implements LiteMod
 	private static Class<? extends EntityOtherPlayerMPHookable> hookableOtherPlayerClass = EntityOtherPlayerMPHookable.class;
 	
 	private static List<IEntityOtherPlayerMPSpawnListener> spawnListeners = new LinkedList<IEntityOtherPlayerMPSpawnListener>();
+	
+	private static List<ITimeHandler> timeHandlers = new LinkedList<ITimeHandler>();
 	
 	/* (non-Javadoc)
 	 * @see com.mumfrey.liteloader.LiteMod#getName()
@@ -105,6 +110,58 @@ public class LiteModVoxelCommon implements LiteMod
 		hookableOtherPlayerClass = otherPlayerMPClass;
 	}
 	
+	public static void registerTimeHandler(ITimeHandler timeHandler)
+	{
+		if (!LiteModVoxelCommon.timeHandlers.contains(timeHandler))
+		{
+			LiteModVoxelCommon.timeHandlers.add(timeHandler);
+		}
+	}
+	
+	public static void handleTimeUpdate(INetHandler netHandler, S03PacketTimeUpdate packet)
+	{
+		LiteModVoxelCommon.updateTime(netHandler, packet.func_149366_c(), packet.func_149365_d());
+	}
+
+	public static void updateTime(long totalTime, long worldTime)
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+		if (mc.thePlayer != null && mc.thePlayer.sendQueue != null)
+		{
+			LiteModVoxelCommon.updateTime(mc.thePlayer.sendQueue, totalTime, worldTime);
+		}
+	}
+	
+	/**
+	 * @param netHandler
+	 * @param totalTime
+	 * @param worldTime
+	 */
+	public static void updateTime(INetHandler netHandler, long totalTime, long worldTime)
+	{
+		long inTotalTime = totalTime;
+		long inWorldTime = worldTime;
+		
+		for (ITimeHandler timeHandler : LiteModVoxelCommon.timeHandlers)
+		{
+			timeHandler.onTimeUpdate(totalTime, worldTime);
+		}
+			
+		for (ITimeHandler timeHandler : LiteModVoxelCommon.timeHandlers)
+		{
+			if (timeHandler.isFreezingTime())
+			{
+				totalTime = timeHandler.getFrozenTotalTime(inTotalTime);
+				worldTime = timeHandler.getFrozenWorldTime(inWorldTime);
+				break;
+			}
+			
+			worldTime += timeHandler.getTimeOffset();
+		}
+		
+		((INetHandlerPlayClient)netHandler).handleTimeUpdate(new S03PacketTimeUpdate(totalTime, worldTime, false));
+	}
+	
 	/**
 	 * Register an listener that wants to be notified of player spawn events
 	 * 
@@ -112,9 +169,9 @@ public class LiteModVoxelCommon implements LiteMod
 	 */
 	public static void registerEntitySpawnListener(IEntityOtherPlayerMPSpawnListener listener)
 	{
-		if (!spawnListeners.contains(listener))
+		if (!LiteModVoxelCommon.spawnListeners.contains(listener))
 		{
-			spawnListeners.add(listener);
+			LiteModVoxelCommon.spawnListeners.add(listener);
 		}
 	}
 

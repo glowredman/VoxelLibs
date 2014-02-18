@@ -154,6 +154,7 @@ public class PrivateFields<P, T>
 		public static final StaticFields<Gui, ResourceLocation>        optionsBackground = new StaticFields<Gui, ResourceLocation>(Gui.class,         ObfuscationMapping.optionsBackground);
 		public static final StaticFields<Blocks, Block>                    standing_sign = new StaticFields<Blocks, Block>        (Blocks.class,      ObfuscationMapping.standing_sign);
 		public static final StaticFields<Blocks, Block>                        wall_sign = new StaticFields<Blocks, Block>        (Blocks.class,      ObfuscationMapping.wall_sign);
+		public static final StaticFields<Blocks, Block>                      mob_spawner = new StaticFields<Blocks, Block>        (Blocks.class,      ObfuscationMapping.mob_spawner);
 	}
 
 	// If anyone screws up the formatting of this table again I will have them fed to a shark
@@ -195,6 +196,7 @@ public class PrivateFields<P, T>
 	public static final PrivateFields<GuiScreenResourcePacks, GuiScreen>               guiResourcePacksParentScreen = new PrivateFields<GuiScreenResourcePacks, GuiScreen>              (GuiScreenResourcePacks.class,               ObfuscationMapping.guiResourcePacksParentScreen);
 	public static final PrivateFields<AbstractResourcePack, File>                          abstractResourcePackFile = new PrivateFields<AbstractResourcePack, File>                     (AbstractResourcePack.class,                 ObfuscationMapping.abstractResourcePackFile);
 	public static final PrivateFields<Minecraft, Framebuffer>                                         mcFramebuffer = new PrivateFields<Minecraft, Framebuffer>                         (Minecraft.class,                            ObfuscationMapping.mcFramebuffer);
+	public static final PrivateFields<World, WorldInfo>                                                   worldInfo = new PrivateFields<World, WorldInfo>                               (World.class,                                ObfuscationMapping.worldInfo);
 
 	public static final PrivateFields<SoundEventAccessorComposite, List<ISoundEventAccessor>>                   eventSounds = new PrivateFields<SoundEventAccessorComposite, List<ISoundEventAccessor>>         (SoundEventAccessorComposite.class, ObfuscationMapping.eventSounds);
 	public static final PrivateFields<TextureManager, Map<ResourceLocation, ? extends ITextureObject>> resourceToTextureMap = new PrivateFields<TextureManager, Map<ResourceLocation, ? extends ITextureObject>>(TextureManager.class, ObfuscationMapping.resourceToTextureMap);
