@@ -141,6 +141,7 @@ public class LiteModVoxelCommon implements LiteMod
 	{
 		long inTotalTime = totalTime;
 		long inWorldTime = worldTime;
+		boolean frozen = false;
 		
 		for (ITimeHandler timeHandler : LiteModVoxelCommon.timeHandlers)
 		{
@@ -151,6 +152,7 @@ public class LiteModVoxelCommon implements LiteMod
 		{
 			if (timeHandler.isFreezingTime())
 			{
+				frozen = true;
 				totalTime = timeHandler.getFrozenTotalTime(inTotalTime);
 				worldTime = timeHandler.getFrozenWorldTime(inWorldTime);
 				break;
@@ -159,7 +161,7 @@ public class LiteModVoxelCommon implements LiteMod
 			worldTime += timeHandler.getTimeOffset();
 		}
 		
-		((INetHandlerPlayClient)netHandler).handleTimeUpdate(new S03PacketTimeUpdate(totalTime, worldTime, false));
+		((INetHandlerPlayClient)netHandler).handleTimeUpdate(new S03PacketTimeUpdate(totalTime, worldTime, !frozen));
 	}
 	
 	/**
