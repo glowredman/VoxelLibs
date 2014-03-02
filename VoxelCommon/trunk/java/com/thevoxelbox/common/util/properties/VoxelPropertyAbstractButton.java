@@ -33,7 +33,7 @@ public abstract class VoxelPropertyAbstractButton<PropertyType extends IVoxelPro
 		int colour = overButton ? 0xFFFFFF : 0x999999;
 		
 		drawRect(this.xPosition + this.buttonOffset + this.buttonWidth - 1, this.yPosition + this.buttonHeight, this.xPosition + this.buttonOffset + 1, this.yPosition, 0xFF000000);
-		host.drawTessellatedModalBorderRect(LiteModVoxelCommon.GUIPARTS, 256, this.xPosition + this.buttonOffset - outset, this.yPosition + this.buttonHeight - outset, this.xPosition + this.buttonOffset + this.buttonWidth + outset, this.yPosition + this.buttonHeight + outset, 0, v, 16, v + 16, 4);
+		host.drawTessellatedModalBorderRect( LiteModVoxelCommon.GUIPARTS, 256, this.xPosition + this.buttonOffset - outset, this.yPosition - 1 - outset, this.xPosition + this.buttonOffset + this.buttonWidth + outset, this.yPosition + 1 + this.buttonHeight + outset, 0, v, 16, v + 16, 4);
 		
 		this.drawString(this.fontRenderer, this.displayText, (this.xPosition + this.buttonOffset + (this.buttonWidth / 2)) - (this.fontRenderer.getStringWidth(this.displayText) / 2), this.yPosition + 4, colour);
 	}
