@@ -246,6 +246,23 @@ public class FBO
 	 */
 	public void draw(int x, int y, int x2, int y2, int z, float alpha)
 	{
+		this.draw(x, y, x2, y2, z, alpha, 0.0, 0.0, 1.0, 1.0);
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param x2
+	 * @param y2
+	 * @param z
+	 * @param alpha
+	 * @param u
+	 * @param v
+	 * @param u2
+	 * @param v2
+	 */
+	public void draw(double x, double y, double x2, double y2, double z, float alpha, double u, double v, double u2, double v2)
+	{
 		if (supported && this.created)
 		{
 			glEnable(GL_TEXTURE_2D);
@@ -254,10 +271,10 @@ public class FBO
 			
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(x,  y2, z, 0, 0);
-			tessellator.addVertexWithUV(x2, y2, z, 1, 0);
-			tessellator.addVertexWithUV(x2, y,  z, 1, 1);
-			tessellator.addVertexWithUV(x,  y,  z, 0, 1);
+			tessellator.addVertexWithUV(x,  y2, z, u, v);
+			tessellator.addVertexWithUV(x2, y2, z, u2, v);
+			tessellator.addVertexWithUV(x2, y,  z, u2, v2);
+			tessellator.addVertexWithUV(x,  y,  z, u, v2);
 			tessellator.draw();
 		}
 	}

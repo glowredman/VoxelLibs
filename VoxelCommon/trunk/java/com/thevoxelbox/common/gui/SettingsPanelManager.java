@@ -173,8 +173,8 @@ public class SettingsPanelManager implements Tickable
 		int largest = 0;
 		
 		for (SettingsPanelMenuTab tab : this.tabs)
-			if (this.mc.fontRenderer.getStringWidth(tab.getLabel()) > largest)
-				largest = this.mc.fontRenderer.getStringWidth(tab.getLabel());
+			if (this.mc.fontRendererObj.getStringWidth(tab.getLabel()) > largest)
+				largest = this.mc.fontRendererObj.getStringWidth(tab.getLabel());
 		
 		if (SettingsPanelManager.TAB_HEIGHT * this.tabs.size() < GuiVoxelBoxSettingsPanel.PANEL_HEIGHT)
 			SettingsPanelManager.TAB_WIDTH = largest + 6;

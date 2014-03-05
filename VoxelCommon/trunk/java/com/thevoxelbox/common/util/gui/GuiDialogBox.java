@@ -282,9 +282,9 @@ public abstract class GuiDialogBox extends AdvancedDrawGui
 		drawRect(this.dialogX, this.dialogY - 18, this.dialogX + this.dialogWidth, this.dialogY, backColour2);
 		
 		if (this.centreTitle)
-			this.drawCenteredString(this.mc.fontRenderer, this.dialogTitle, this.dialogX + (this.dialogWidth / 2), this.dialogY - 13, this.dialogTitleColour);
+			this.drawCenteredString(this.mc.fontRendererObj, this.dialogTitle, this.dialogX + (this.dialogWidth / 2), this.dialogY - 13, this.dialogTitleColour);
 		else
-			this.drawString(this.mc.fontRenderer, this.dialogTitle, this.dialogX + 5, this.dialogY - 13, this.dialogTitleColour);
+			this.drawString(this.mc.fontRendererObj, this.dialogTitle, this.dialogX + 5, this.dialogY - 13, this.dialogTitleColour);
 		
 		// Dialog body
 		drawRect(this.dialogX, this.dialogY, this.dialogX + this.dialogWidth, this.dialogY + this.dialogHeight, backColour);

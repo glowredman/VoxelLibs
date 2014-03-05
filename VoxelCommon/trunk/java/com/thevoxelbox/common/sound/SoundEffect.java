@@ -9,12 +9,12 @@ public class SoundEffect extends PositionedSound
     public SoundEffect(ResourceLocation soundLocation, float volume, float pitch)
     {
         super(soundLocation);
-		this.field_147662_b = volume;
+		this.volume = volume;
 		this.field_147663_c = pitch;
-		this.field_147660_d = 0.0F;
-		this.field_147661_e = 0.0F;
-		this.field_147658_f = 0.0F;
-		this.field_147659_g = false;
+		this.xPosF = 0.0F;
+		this.yPosF = 0.0F;
+		this.zPosF = 0.0F;
+		this.repeat = false;
 		this.field_147665_h = 0;
 		this.field_147666_i = ISound.AttenuationType.NONE;
     }

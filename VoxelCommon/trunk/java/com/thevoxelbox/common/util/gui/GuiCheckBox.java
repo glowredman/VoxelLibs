@@ -41,7 +41,7 @@ public class GuiCheckBox extends GuiControl
 	{
 		super(id, xPosition, yPosition, displayText);
 		
-		this.setWidth(Minecraft.getMinecraft().fontRenderer.getStringWidth(displayText) + 20);
+		this.setWidth(Minecraft.getMinecraft().fontRendererObj.getStringWidth(displayText) + 20);
 		this.checked = checked;
 	}
 	
@@ -58,7 +58,7 @@ public class GuiCheckBox extends GuiControl
 	{
 		super(id, xPosition, yPosition, displayText);
 		
-		this.setWidth(Minecraft.getMinecraft().fontRenderer.getStringWidth(displayText) + 20);
+		this.setWidth(Minecraft.getMinecraft().fontRendererObj.getStringWidth(displayText) + 20);
 		this.checked = checked;
 		this.Style = style;
 	}
@@ -119,7 +119,7 @@ public class GuiCheckBox extends GuiControl
 		// Control not visible
 		if(!this.isVisible()) return;
 		
-		boolean mouseOver = mouseX >= this.field_146128_h && mouseY >= this.field_146129_i && mouseX < this.field_146128_h + this.field_146120_f && mouseY < this.field_146129_i + this.field_146121_g;
+		boolean mouseOver = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
 		
 		if (this.Style == DisplayStyle.Button)
 		{
@@ -131,17 +131,17 @@ public class GuiCheckBox extends GuiControl
 			glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			
 			int u = this.checked ? 12 : 0;
-			int y = this.field_146129_i + (this.field_146121_g - 12) / 2;
+			int y = this.yPosition + (this.height - 12) / 2;
 			
-			this.drawTexturedModalRect(this.field_146128_h, y, this.field_146128_h + 12, y + 12, u, 52, u + 12, 64);
+			this.drawTexturedModalRect(this.xPosition, y, this.xPosition + 12, y + 12, u, 52, u + 12, 64);
 			this.mouseDragged(minecraft, mouseX, mouseY);
-			this.drawString(minecraft.fontRenderer, this.displayString, this.field_146128_h + 16, this.field_146129_i + (this.field_146121_g - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : 0xe0e0e0) : 0xffa0a0a0);
+			this.drawString(minecraft.fontRendererObj, this.displayString, this.xPosition + 16, this.yPosition + (this.height - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : 0xe0e0e0) : 0xffa0a0a0);
 		}
 		else
 		{
-			Gui.drawRect(this.field_146128_h, this.field_146129_i, this.field_146128_h + this.field_146120_f, this.field_146129_i + this.field_146121_g, this.checked ? 0xFFFFFF00 : 0xFF808080);
-			Gui.drawRect(this.field_146128_h + 1, this.field_146129_i + 1, this.field_146128_h + this.field_146120_f - 1, this.field_146129_i + this.field_146121_g - 1, mouseOver ? 0xFF333333 : 0xFF000000);
-			this.drawCenteredString(minecraft.fontRenderer, this.displayString, this.field_146128_h + (this.field_146120_f / 2), this.field_146129_i + (this.field_146121_g - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : (this.checked ? 0xFFFFFF00 : 0xe0e0e0)) : 0xffa0a0a0);
+			Gui.drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, this.checked ? 0xFFFFFF00 : 0xFF808080);
+			Gui.drawRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + this.width - 1, this.yPosition + this.height - 1, mouseOver ? 0xFF333333 : 0xFF000000);
+			this.drawCenteredString(minecraft.fontRendererObj, this.displayString, this.xPosition + (this.width / 2), this.yPosition + (this.height - 8) / 2, this.isEnabled() ? (mouseOver ? 0xa0ffff : (this.checked ? 0xFFFFFF00 : 0xe0e0e0)) : 0xffa0a0a0);
 		}
 	}
 

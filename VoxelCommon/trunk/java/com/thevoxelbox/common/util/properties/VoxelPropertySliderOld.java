@@ -64,21 +64,21 @@ public class VoxelPropertySliderOld extends VoxelProperty<IVoxelPropertyProvider
 	{
 		if (this.displayText != null)
 		{
-			this.drawString(this.mc.fontRenderer, this.displayText, this.xPosition + 18, this.yPosition, 0x99CCFF);
+			this.drawString(this.mc.fontRendererObj, this.displayText, this.xPosition + 18, this.yPosition, 0x99CCFF);
 		}
 		
-		this.drawString(this.mc.fontRenderer, this.minText, this.xPosition + 30, this.yPosition + 15, 0xFFFFFF);
+		this.drawString(this.mc.fontRendererObj, this.minText, this.xPosition + 30, this.yPosition + 15, 0xFFFFFF);
 		
 		if (this.maxText != null)
 		{
-			this.drawString(this.mc.fontRenderer, this.maxText, this.xPosition + 130, this.yPosition + 15, 0xFFFFFF);
+			this.drawString(this.mc.fontRendererObj, this.maxText, this.xPosition + 130, this.yPosition + 15, 0xFFFFFF);
 		}
 		else
 		{
 			float scale = (this.value + 1.0F) / 2.0F;
 			int displayValue = MathHelper.ceiling_float_int((this.minValue + ((this.maxValue - this.minValue) * scale)) * 100F);
 			
-			this.drawString(this.mc.fontRenderer, displayValue + "%", this.xPosition + 130, this.yPosition + 15, 0xFFFFFF);
+			this.drawString(this.mc.fontRendererObj, displayValue + "%", this.xPosition + 130, this.yPosition + 15, 0xFFFFFF);
 		}
 		
 		this.overReset = this.mouseOverReset(mouseX, mouseY);
@@ -88,7 +88,7 @@ public class VoxelPropertySliderOld extends VoxelProperty<IVoxelPropertyProvider
 		
 		drawRect(this.xPosition + 160 - outset, this.yPosition + 11 - outset, this.xPosition + 212 + outset, this.yPosition + 26 + outset, 0xFF000000);
 		host.drawTessellatedModalBorderRect(LiteModVoxelCommon.GUIPARTS, 256, this.xPosition + 159 - outset, this.yPosition + 10 - outset, this.xPosition + 213 + outset, this.yPosition + 27 + outset, 0, v, 16, 16 + v, 4);
-		this.drawString(this.mc.fontRenderer, "Default", this.xPosition + 169, this.yPosition + 15, this.overReset ? 0xFFFFFF : 0x999999);
+		this.drawString(this.mc.fontRendererObj, "Default", this.xPosition + 169, this.yPosition + 15, this.overReset ? 0xFFFFFF : 0x999999);
 		
 		int sliderLeft  = this.xPosition + 48;
 		int sliderRight = this.xPosition + 124;

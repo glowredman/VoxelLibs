@@ -33,8 +33,8 @@ public abstract class VoxelPropertyAbstractTextField<PropertyType extends IVoxel
 	 * @param mouseY
 	 * @param fieldValue
 	 * @param focused
-	 * @param xPosition
-	 * @param yPosition
+	 * @param field_146128_h
+	 * @param field_146129_i
 	 * @return
 	 */
 	@Override

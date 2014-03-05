@@ -64,7 +64,7 @@ public class StatusMessageManager implements Tickable
 			
 			for (StatusMessage msg : this.sortedMessage)
 			{
-				yPos += msg.drawStatus(minecraft.fontRenderer, xPos, yPos);
+				yPos += msg.drawStatus(minecraft.fontRendererObj, xPos, yPos);
 			}
 		}
 	}

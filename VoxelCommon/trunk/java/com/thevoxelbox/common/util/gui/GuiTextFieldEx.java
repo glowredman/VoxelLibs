@@ -43,7 +43,7 @@ public class GuiTextFieldEx extends GuiTextField
 	{
 		super(fontrenderer, xPos, yPos, width, height);
 		this.allowedCharacters = allowedCharacters;
-		this.func_146203_f(maxStringLength); // setMaxStringLength
+		this.setMaxStringLength(maxStringLength);
 		this.setText(initialText);
 
 		this.width = width;
@@ -63,7 +63,7 @@ public class GuiTextFieldEx extends GuiTextField
 	public GuiTextFieldEx(FontRenderer fontrenderer, int xPos, int yPos, int width, int height, String initialText)
 	{
 		super(fontrenderer, xPos, yPos, width, height);
-		this.func_146203_f(65536); // setMaxStringLength
+		this.setMaxStringLength(65536);
 		this.setText(initialText);
 
 		this.width = width;
@@ -83,7 +83,7 @@ public class GuiTextFieldEx extends GuiTextField
 	public GuiTextFieldEx(FontRenderer fontrenderer, int xPos, int yPos, int width, int height, int initialValue, int digits)
 	{
 		super(fontrenderer, xPos, yPos, width, height);
-		this.func_146203_f(digits); // setMaxStringLength
+		this.setMaxStringLength(digits);
 		this.setText(String.valueOf(initialValue));
 		this.allowedCharacters = "0123456789";
 		this.width = width;
@@ -107,11 +107,11 @@ public class GuiTextFieldEx extends GuiTextField
 	 * @see net.minecraft.src.GuiTextField#func_50038_e()
 	 */
 	@Override
-	public void func_146202_e() // setCursorPositionEnd
+	public void setCursorPositionEnd()
 	{
 		try
 		{
-			super.func_146202_e(); // setCursorPositionEnd
+			super.setCursorPositionEnd();
 		}
 		catch (Exception ex) { }
 	}
@@ -138,18 +138,18 @@ public class GuiTextFieldEx extends GuiTextField
 	
 	public void scrollToEnd()
 	{
-		this.func_146190_e(0);
-		this.func_146190_e(this.getText().length());
+		this.setCursorPosition(0);
+		this.setCursorPosition(this.getText().length());
 	}
 	
 	/* (non-Javadoc)
 	 * @see net.minecraft.src.GuiTextField#func_50032_g(int)
 	 */
 	@Override
-	public void func_146190_e(int cursorPos) // setCursorPosition
+	public void setCursorPosition(int cursorPos)
 	{
-		super.func_146190_e(cursorPos); // setCursorPosition
-		super.func_146190_e(cursorPos); // setCursorPosition
+		super.setCursorPosition(cursorPos);
+		super.setCursorPosition(cursorPos);
 	}
 
 	/**

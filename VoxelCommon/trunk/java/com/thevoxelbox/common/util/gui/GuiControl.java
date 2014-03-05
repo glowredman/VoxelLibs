@@ -58,42 +58,42 @@ public class GuiControl extends GuiButton
 	
 	public final int getWidth()
 	{
-		return this.field_146120_f;
+		return this.width;
 	}
 	
 	public final void setWidth(int newWidth)
 	{
-		this.field_146120_f = newWidth;
+		this.width = newWidth;
 	}
 	
 	public final int getHeight()
 	{
-		return this.field_146121_g;
+		return this.height;
 	}
 	
 	public final void setHeight(int newHeight)
 	{
-		this.field_146121_g = newHeight;
+		this.height = newHeight;
 	}
 	
 	public final int getXPosition()
 	{
-		return this.field_146128_h;
+		return this.xPosition;
 	}
 	
 	public final void setXPosition(int newXPosition)
 	{
-		this.field_146128_h = newXPosition;
+		this.xPosition = newXPosition;
 	}
 	
 	public final int getYPosition()
 	{
-		return this.field_146129_i;
+		return this.yPosition;
 	}
 	
 	public final void setYPosition(int newYPosition)
 	{
-		this.field_146129_i = newYPosition;
+		this.yPosition = newYPosition;
 	}
 	
 	public final boolean isEnabled()
@@ -108,12 +108,12 @@ public class GuiControl extends GuiButton
 	
 	public final boolean isVisible()
 	{
-		return this.field_146125_m;
+		return this.visible;
 	}
 	
 	public final void setVisible(boolean newVisible)
 	{
-		this.field_146125_m = newVisible;
+		this.visible = newVisible;
 	}
 	
 	protected final float getZLevel()

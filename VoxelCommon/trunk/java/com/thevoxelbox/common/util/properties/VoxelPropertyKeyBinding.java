@@ -36,8 +36,8 @@ public class VoxelPropertyKeyBinding extends VoxelProperty<IVoxelPropertyProvide
 	 * @param displayText
 	 * @param keyCode
 	 * @param bindActive
-	 * @param xPosition
-	 * @param yPosition
+	 * @param field_146128_h
+	 * @param field_146129_i
 	 * @return
 	 */
 	@Override

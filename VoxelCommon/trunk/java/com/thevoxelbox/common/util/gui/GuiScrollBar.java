@@ -93,12 +93,12 @@ public class GuiScrollBar extends GuiControlEx
 	
 	protected int getLargeDimension()
 	{
-		return (this.orientation == ScrollBarOrientation.Vertical) ? this.field_146121_g : this.field_146120_f;
+		return (this.orientation == ScrollBarOrientation.Vertical) ? this.height : this.width;
 	}
 	
 	protected int getSmallDimension()
 	{
-		return (this.orientation == ScrollBarOrientation.Vertical) ? this.field_146120_f : this.field_146121_g;
+		return (this.orientation == ScrollBarOrientation.Vertical) ? this.width : this.height;
 	}
 	
 	/**
@@ -228,15 +228,15 @@ public class GuiScrollBar extends GuiControlEx
 			AbstractionLayer.bindTexture(LiteModVoxelCommon.GUIPARTS);
 			this.setTexMapSize(256);
 			
-			this.drawTessellatedModalBorderRect(this.field_146128_h, this.field_146129_i, this.field_146128_h + this.field_146120_f, this.field_146129_i + this.field_146120_f, 0, upButtonHoverState, 16, upButtonHoverState + 16, 4);
-			this.drawTessellatedModalBorderRect(this.field_146128_h, this.field_146129_i + this.field_146121_g - this.field_146120_f, this.field_146128_h + this.field_146120_f, this.field_146129_i + this.field_146121_g, 0, downButtonHoverState, 16, downButtonHoverState + 16, 4);
+			this.drawTessellatedModalBorderRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.width, 0, upButtonHoverState, 16, upButtonHoverState + 16, 4);
+			this.drawTessellatedModalBorderRect(this.xPosition, this.yPosition + this.height - this.width, this.xPosition + this.width, this.yPosition + this.height, 0, downButtonHoverState, 16, downButtonHoverState + 16, 4);
 			
 			// Slider tray
-			this.drawTessellatedModalBorderRect(this.field_146128_h + 1, this.field_146129_i + this.field_146120_f, this.field_146128_h + this.field_146120_f - 1, this.field_146129_i + this.field_146121_g - this.field_146120_f, 0, 0, 16, 16, 4);
+			this.drawTessellatedModalBorderRect(this.xPosition + 1, this.yPosition + this.width, this.xPosition + this.width - 1, this.yPosition + this.height - this.width, 0, 0, 16, 16, 4);
 			
 			// Button icons
-			this.drawTexturedModalRect(this.field_146128_h + 1, this.field_146129_i + 1, this.field_146128_h + this.field_146120_f - 2, this.field_146129_i + this.field_146120_f - 2, 36, 0, 54, 18);
-			this.drawTexturedModalRect(this.field_146128_h + 1, this.field_146129_i + this.field_146121_g - this.field_146120_f + 1, this.field_146128_h + this.field_146120_f - 2, this.field_146129_i + this.field_146121_g - 1, 18, 0, 36, 18);
+			this.drawTexturedModalRect(this.xPosition + 1, this.yPosition + 1, this.xPosition + this.width - 2, this.yPosition + this.width - 2, 36, 0, 54, 18);
+			this.drawTexturedModalRect(this.xPosition + 1, this.yPosition + this.height - this.width + 1, this.xPosition + this.width - 2, this.yPosition + this.height - 1, 18, 0, 36, 18);
 		}
 		
 		// Handle mouse dragged event
@@ -246,17 +246,17 @@ public class GuiScrollBar extends GuiControlEx
 		
 		if (this.orientation == ScrollBarOrientation.Vertical)
 		{
-			this.drawTessellatedModalBorderRect(this.field_146128_h, this.field_146129_i + this.field_146120_f + this.buttonPos, this.field_146128_h + this.field_146120_f, this.field_146129_i + this.field_146120_f + this.buttonPos + this.scrollButtonSize, 0, buttonHoverState, 16, buttonHoverState + 16, 4);
+			this.drawTessellatedModalBorderRect(this.xPosition, this.yPosition + this.width + this.buttonPos, this.xPosition + this.width, this.yPosition + this.width + this.buttonPos + this.scrollButtonSize, 0, buttonHoverState, 16, buttonHoverState + 16, 4);
 		}
 	}
 	
 	protected boolean mouseIsOverButton(int button, int mouseX, int mouseY)
 	{
 		int buttonX = 0, buttonY = 0, buttonWidth = this.getSmallDimension(), buttonHeight = this.getSmallDimension();
-		mouseX -= this.field_146128_h;
-		mouseY -= this.field_146129_i;
+		mouseX -= this.xPosition;
+		mouseY -= this.yPosition;
 		
-		if (mouseX < 0 || mouseY < 0 || mouseX > this.field_146120_f || mouseY > this.field_146121_g) return false;
+		if (mouseX < 0 || mouseY < 0 || mouseX > this.width || mouseY > this.height) return false;
 		
 		if (button == 2)		// down button
 		{
@@ -290,7 +290,7 @@ public class GuiScrollBar extends GuiControlEx
 			
 			if (this.mouseDownState == 1)
 			{
-				int mPos = (this.orientation == ScrollBarOrientation.Vertical) ? mouseY - this.field_146129_i : mouseX - this.field_146128_h;
+				int mPos = (this.orientation == ScrollBarOrientation.Vertical) ? mouseY - this.yPosition : mouseX - this.xPosition;
 				this.value = (int)(((float)(mPos - this.dragOffset - this.getSmallDimension()) / (float)this.traySize) * (this.max - this.min)) + this.min;
 			}
 			else if (this.mouseDownState == 2 && mouseDownTicks > 6)
@@ -334,7 +334,7 @@ public class GuiScrollBar extends GuiControlEx
 		if (super.mousePressed(minecraft, mouseX, mouseY))
 		{
 			// Adjust coords relative to control
-			mouseX -= this.field_146128_h; mouseY -= this.field_146129_i;
+			mouseX -= this.xPosition; mouseY -= this.yPosition;
 			
 			if (this.orientation == ScrollBarOrientation.Horizontal)
 			{

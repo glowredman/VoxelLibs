@@ -39,7 +39,7 @@ public final class AbstractionLayer
 	 */
 	public static FontRenderer getFontRenderer()
 	{
-		return AbstractionLayer.getMinecraft().fontRenderer;
+		return AbstractionLayer.getMinecraft().fontRendererObj;
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public final class AbstractionLayer
 	 */
 	public static void addChatMessage(String message)
 	{
-		AbstractionLayer.getMinecraft().ingameGUI.getChatGUI().func_146227_a(new ChatComponentText(message)); // printChatMessage
+		AbstractionLayer.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
 	}
 	
 	/**

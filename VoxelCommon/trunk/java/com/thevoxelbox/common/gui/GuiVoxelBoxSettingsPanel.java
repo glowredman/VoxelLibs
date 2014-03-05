@@ -208,7 +208,7 @@ public abstract class GuiVoxelBoxSettingsPanel extends AdvancedDrawGui implement
 		
 		this.drawDepthRect(right - 1, top - 2, right - 14, top - 15, 0x80000000);
 		this.drawTessellatedModalBorderRect(LiteModVoxelCommon.GUIPARTS, 256, this.overCloseButton ? right - 16 : right - 15, this.overCloseButton ? top - 17 : top - 16, this.overCloseButton ? right + 1 : right, this.overCloseButton ? top : top - 1, 0, v, 16, 16 + v, 4);
-		this.drawString(this.mc.fontRenderer, "x", right - 10, top - 13, this.overCloseButton ? 0x55FFFF : 0xAAAAAA);
+		this.drawString(this.mc.fontRendererObj, "x", right - 10, top - 13, this.overCloseButton ? 0x55FFFF : 0xAAAAAA);
 	}
 	
 	@Override

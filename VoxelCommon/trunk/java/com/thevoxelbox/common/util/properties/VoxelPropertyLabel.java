@@ -26,7 +26,7 @@ public class VoxelPropertyLabel extends VoxelProperty<IVoxelPropertyProvider>
 	@Override
 	public void draw(IAdvancedDrawGui host, int mouseX, int mouseY)
 	{
-		this.drawString(this.mc.fontRenderer, this.displayText, this.xPosition, this.yPosition, this.colour);
+		this.drawString(this.mc.fontRendererObj, this.displayText, this.xPosition, this.yPosition, this.colour);
 	}
 	
 	@Override

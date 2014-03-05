@@ -28,7 +28,7 @@ public class SettingsPanelMenuTab implements Comparable<SettingsPanelMenuTab>
 		
 		this.label = label;
 		this.priority = priority;
-		this.width = this.mc.fontRenderer.getStringWidth(label);
+		this.width = this.mc.fontRendererObj.getStringWidth(label);
 		this.xPos = xPosition - this.width - 2;
 	}
 	
@@ -85,7 +85,7 @@ public class SettingsPanelMenuTab implements Comparable<SettingsPanelMenuTab>
 			panel.zDrop();
 			panel.drawDepthRect(tabX + 1, tabY + 1, tabRight - 1, tabBottom - 1, 0x80000000);
 			
-			this.mc.fontRenderer.drawString(this.label, this.xPos, y, this.isMouseOver(tabMenuWidth, mouseX, mouseY) ? 0x55FFFF : (this.active ? 0xFFFF55 : 0xAAAAAA));
+			this.mc.fontRendererObj.drawString(this.label, this.xPos, y, this.isMouseOver(tabMenuWidth, mouseX, mouseY) ? 0x55FFFF : (this.active ? 0xFFFF55 : 0xAAAAAA));
 		}
 	}
 	

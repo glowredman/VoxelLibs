@@ -86,7 +86,7 @@ public abstract class VoxelProperty<PropertyType extends IVoxelPropertyProvider>
 			throw new RuntimeException(String.format("Can't create VoxelProperty for binding %s for panel %s", binding, propertyProvider.getClass().getSimpleName()));
 		}
 		
-		this.fontRenderer = this.mc.fontRenderer;
+		this.fontRenderer = this.mc.fontRendererObj;
 		
 		this.propertyBinding = binding;
 		this.displayText = displayText;
@@ -179,6 +179,6 @@ public abstract class VoxelProperty<PropertyType extends IVoxelPropertyProvider>
 	 */
 	public void playClickSound(SoundHandler soundHandler)
 	{
-		soundHandler.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+		soundHandler.playSound(PositionedSoundRecord.playSound1(new ResourceLocation("gui.button.press"), 1.0F));
 	}
 }
