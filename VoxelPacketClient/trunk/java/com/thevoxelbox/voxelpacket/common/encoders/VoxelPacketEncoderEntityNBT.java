@@ -74,7 +74,7 @@ public class VoxelPacketEncoderEntityNBT implements IVoxelPacketEncoder<Entity>
 					NBTTagCompound entityData = CompressedStreamTools.read(new DataInputStream(new ByteArrayInputStream(data)));
 					Entity entity = EntityList.createEntityFromNBT(entityData, theWorld);
 					
-					if (entity != null && !theWorld.field_147482_g.contains(entity)) // loadedTileEntityList
+					if (entity != null && !theWorld.loadedTileEntityList.contains(entity))
 					{
 						theWorld.joinEntityInSurroundings(entity);
 					}
