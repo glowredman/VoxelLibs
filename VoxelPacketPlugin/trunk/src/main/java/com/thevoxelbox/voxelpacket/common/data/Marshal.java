@@ -119,7 +119,7 @@ public abstract class Marshal
 	/**
 	 * Unpack a long into four bytes
 	 * 
-	 * @param intValue Value to unpack
+	 * @param longValue Value to unpack
 	 * 
 	 * @return
 	 */

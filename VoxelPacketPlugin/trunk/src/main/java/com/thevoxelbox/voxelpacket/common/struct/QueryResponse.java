@@ -3,7 +3,7 @@ package com.thevoxelbox.voxelpacket.common.struct;
 import java.io.Serializable;
 
 /**
- * Data structure for responding to server->client queries over the channel
+ * Data structure for responding to server-to-client queries over the channel
  * 
  * @author Adam Mummery-Smith
  *

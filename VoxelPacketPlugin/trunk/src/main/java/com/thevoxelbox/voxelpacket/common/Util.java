@@ -47,7 +47,7 @@ public abstract class Util
 	 * 
 	 * @param instanceClass Class which defines the required field
 	 * @param instance Instance object to get field
-	 * @param fieldName Name of the field to access (inside debugger)
+	 * @param obfuscatedFieldName Name of the field to access (inside debugger)
 	 * 
 	 * @return
 	 */

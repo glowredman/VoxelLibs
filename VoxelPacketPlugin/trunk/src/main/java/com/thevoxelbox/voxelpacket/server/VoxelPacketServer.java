@@ -295,7 +295,7 @@ public class VoxelPacketServer extends VoxelPacketHandlerBase implements IVoxelM
 	/**
 	 * Sends the specified message to all clients in the list 
 	 * 
-	 * @param player Client to send the message to
+	 * @param players Clients to send the message to
 	 * @param shortCode Shortcode of the message to send
 	 * @param messageData Message payload
 	 * @param relevantEntity Entity ID to include with this message
@@ -314,9 +314,10 @@ public class VoxelPacketServer extends VoxelPacketHandlerBase implements IVoxelM
 
 	/**
 	 * Callback used by the packet sender delegates to actually dispatch a packet to the player 
-	 * 
-	 * @param packet Packet to send
-	 * @param player Player to send to
+	 *
+     * @param player Player to send to
+     * @param channel Channel to send payload on
+     * @param payload Packet to send
 	 */
 	protected void onSendPayloadToPlayer(Player player, String channel, byte[] payload)
 	{
