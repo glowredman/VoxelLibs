@@ -5,9 +5,9 @@ import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 
-import net.minecraft.server.v1_7_R1.Entity;
-import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
-import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import net.minecraft.server.v1_7_R2.Entity;
+import net.minecraft.server.v1_7_R2.NBTCompressedStreamTools;
+import net.minecraft.server.v1_7_R2.NBTTagCompound;
 
 import com.thevoxelbox.voxelpacket.common.interfaces.IVoxelPacketEncoder;
 import com.thevoxelbox.voxelpacket.exceptions.InvalidReplicationException;
