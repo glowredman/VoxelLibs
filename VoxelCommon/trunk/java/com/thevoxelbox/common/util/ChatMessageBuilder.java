@@ -51,8 +51,8 @@ public class ChatMessageBuilder {
 	 * @param text The Link Text
 	 * @param path The URL
 	 */
-	public void appendLink(String text, String path) {
-		appendLink(text, EnumChatFormatting.WHITE, path);
+	public void appendLink(String text, String path, boolean onAWebsite) {
+		appendLink(text, EnumChatFormatting.WHITE, path, onAWebsite);
 	}
 	
 	/**
@@ -61,11 +61,11 @@ public class ChatMessageBuilder {
 	 * @param color Color of the link
 	 * @param path The URL
 	 */
-	public void appendLink(String text, EnumChatFormatting color, String path) {
+	public void appendLink(String text, EnumChatFormatting color, String path, boolean onAWebsite) {
 		IChatComponent addmsg = new ChatComponentText(text);
 		addmsg.getChatStyle().setColor(color);
 		addmsg.getChatStyle().setUnderlined(true);
-		addmsg.getChatStyle().setChatClickEvent(new ClickEvent(Action.OPEN_FILE, path));
+		addmsg.getChatStyle().setChatClickEvent(new ClickEvent(onAWebsite ? Action.OPEN_URL : Action.OPEN_FILE, path));
 		queuedMessage.appendSibling(addmsg);
 	}
 	
