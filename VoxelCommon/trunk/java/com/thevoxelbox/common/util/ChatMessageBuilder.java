@@ -42,6 +42,10 @@ public class ChatMessageBuilder {
 		queuedMessage.appendSibling(addmsg);
 	}
 	
+	public void appendChatComponent(IChatComponent comp) {
+		queuedMessage.appendSibling(queuedMessage);
+	}
+	
 	/**
 	 * Add a URL link into the message
 	 * @param text The Link Text
