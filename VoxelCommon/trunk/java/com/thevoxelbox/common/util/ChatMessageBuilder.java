@@ -9,41 +9,55 @@ import net.minecraft.util.IChatComponent;
 /**
  * Utility Class for building a chat message based on StringBuilder
  * @author thatapplefreak
+ * 
+ * TODO Flesh out this class to actually do something useful
  */
-public class ChatMessageBuilder {
-
+public class ChatMessageBuilder
+{
 	/**
 	 * The message being built
 	 */
 	IChatComponent queuedMessage;
 	
-	public ChatMessageBuilder() {
-		queuedMessage = new ChatComponentText("");
+	public ChatMessageBuilder()
+	{
+		this.queuedMessage = new ChatComponentText("");
 	}
-
+	
 	/**
 	 * Just add some plain text into the message
 	 * @param text Text to add
 	 */
-	public void appendText(String text) {
-		queuedMessage.appendSibling(new ChatComponentText(text));
+	public ChatMessageBuilder append(String text)
+	{
+		this.queuedMessage.appendSibling(new ChatComponentText(text));
+		return this;
 	}
 	
 	/**
 	 * Add some formatted text into the message
+	 * 
 	 * @param text The text in the message
 	 * @param color The color in the message
 	 * @param underline Underline the text?
 	 */
-	public void appendText(String text, EnumChatFormatting color, boolean underline) {
+	public ChatMessageBuilder append(String text, EnumChatFormatting color, boolean underline)
+	{
 		IChatComponent addmsg = new ChatComponentText(text);
 		addmsg.getChatStyle().setColor(color);
 		addmsg.getChatStyle().setUnderlined(underline);
-		queuedMessage.appendSibling(addmsg);
+		this.queuedMessage.appendSibling(addmsg);
+		return this;
 	}
 	
-	public void appendChatComponent(IChatComponent comp) {
-		queuedMessage.appendSibling(queuedMessage);
+	/**
+	 * @param comp
+	 * @return
+	 */
+	public ChatMessageBuilder append(IChatComponent comp)
+	{
+		this.queuedMessage.appendSibling(this.queuedMessage);
+		return this;
 	}
 	
 	/**
@@ -51,8 +65,10 @@ public class ChatMessageBuilder {
 	 * @param text The Link Text
 	 * @param path The URL
 	 */
-	public void appendLink(String text, String path, boolean onAWebsite) {
-		appendLink(text, EnumChatFormatting.WHITE, path, onAWebsite);
+	public ChatMessageBuilder append(String text, String path, boolean onAWebsite)
+	{
+		this.append(text, EnumChatFormatting.WHITE, path, onAWebsite);
+		return this;
 	}
 	
 	/**
@@ -61,19 +77,21 @@ public class ChatMessageBuilder {
 	 * @param color Color of the link
 	 * @param path The URL
 	 */
-	public void appendLink(String text, EnumChatFormatting color, String path, boolean onAWebsite) {
+	public ChatMessageBuilder append(String text, EnumChatFormatting color, String path, boolean onAWebsite)
+	{
 		IChatComponent addmsg = new ChatComponentText(text);
 		addmsg.getChatStyle().setColor(color);
 		addmsg.getChatStyle().setUnderlined(true);
 		addmsg.getChatStyle().setChatClickEvent(new ClickEvent(onAWebsite ? Action.OPEN_URL : Action.OPEN_FILE, path));
-		queuedMessage.appendSibling(addmsg);
+		this.queuedMessage.appendSibling(addmsg);
+		return this;
 	}
 	
 	/**
 	 * Put the message into chat
 	 */
-	public void showChatMessageIngame() {
-		AbstractionLayer.getIngameGui().getChatGUI().printChatMessage(queuedMessage);
+	public void showChatMessageIngame()
+	{
+		AbstractionLayer.getIngameGui().getChatGUI().printChatMessage(this.queuedMessage);
 	}
-	
 }
