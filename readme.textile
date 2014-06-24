@@ -1,0 +1,3 @@
+h1. This repository has moved
+
+The *VoxelLibs* projects are now available over at our "GitLab Public":http://git.voxelmodpack.com/public server.
